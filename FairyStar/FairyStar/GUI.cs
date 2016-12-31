@@ -24,7 +24,5 @@ namespace FairyStar
             SetStyle(ControlStyles.DoubleBuffer, true);
             SetBounds(0, 0, 1280, 720);
         }
-
-        
     }
 }

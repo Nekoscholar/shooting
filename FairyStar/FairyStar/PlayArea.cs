@@ -9,6 +9,7 @@ namespace FairyStar
 {
     class PlayArea
     {
+        //adsad
     }
 
     public partial class GUI : Form
