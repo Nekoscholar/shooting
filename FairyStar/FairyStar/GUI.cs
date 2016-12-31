@@ -15,6 +15,7 @@ namespace FairyStar
         public GUI()
         {
             InitializeComponent();
+            //testwab
         }
 
         private void Form1_Load(object sender, EventArgs e)
