@@ -23,7 +23,7 @@ namespace FairyStar
             SetStyle(ControlStyles.AllPaintingInWmPaint, true);
             SetStyle(ControlStyles.UserPaint, true);
             SetStyle(ControlStyles.DoubleBuffer, true);
-            SetBounds(0, 0, 1280, 720);
+            SetBounds(0, 0, Config.wWidth, Config.wHeight);
         }
     }
 }

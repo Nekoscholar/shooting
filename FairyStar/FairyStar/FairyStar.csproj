@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AnimateForm.cs" />
+    <Compile Include="Config.cs" />
     <Compile Include="GUI.cs">
       <SubType>Form</SubType>
     </Compile>
