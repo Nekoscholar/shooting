@@ -28,35 +28,39 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.PlayArea_panel = new System.Windows.Forms.Panel();
+            this.PlayArea_Panel = new FairyStar.DoubleBufferPanel();
             this.SuspendLayout();
             // 
-            // PlayArea_panel
+            // PlayArea_Panel
             // 
-            this.PlayArea_panel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.PlayArea_panel.Location = new System.Drawing.Point(0, 0);
-            this.PlayArea_panel.Margin = new System.Windows.Forms.Padding(0);
-            this.PlayArea_panel.Name = "PlayArea_panel";
-            this.PlayArea_panel.Size = new System.Drawing.Size(1264, 681);
-            this.PlayArea_panel.TabIndex = 0;
-            this.PlayArea_panel.Paint += new System.Windows.Forms.PaintEventHandler(this.PlayArea_paint);
+            this.PlayArea_Panel.BackColor = System.Drawing.Color.DarkSeaGreen;
+            this.PlayArea_Panel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.PlayArea_Panel.ForeColor = System.Drawing.SystemColors.Window;
+            this.PlayArea_Panel.Location = new System.Drawing.Point(0, 0);
+            this.PlayArea_Panel.Margin = new System.Windows.Forms.Padding(0);
+            this.PlayArea_Panel.Name = "PlayArea_Panel";
+            this.PlayArea_Panel.Size = new System.Drawing.Size(1264, 681);
+            this.PlayArea_Panel.TabIndex = 0;
+            this.PlayArea_Panel.VisibleChanged += new System.EventHandler(this.PlayArea_Panel_VisibleChanged);
+            this.PlayArea_Panel.Paint += new System.Windows.Forms.PaintEventHandler(this.PlayArea_Paint);
             // 
             // GUI
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1264, 681);
-            this.Controls.Add(this.PlayArea_panel);
+            this.Controls.Add(this.PlayArea_Panel);
             this.Name = "GUI";
             this.Text = "Form1";
-            this.Load += new System.EventHandler(this.Form1_Load);
+            this.Load += new System.EventHandler(this.GUI_Load);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GUI_KeyDown);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.Panel PlayArea_panel;
+        private DoubleBufferPanel PlayArea_Panel;
     }
 }
 

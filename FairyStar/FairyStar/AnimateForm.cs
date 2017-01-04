@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace FairyStar
 {
-    public class AnimateCircle : Circle
+    public class AnimateCircle : Circle     //디버그에만 그대로 쓰고, 실제 구현시엔 유닛이나 탄에 상속시켜야함
     {
         public int width, height;       //그래픽 그리기를 위한 크기
         public double speedX, speedY, accelX, accelY;
@@ -17,6 +17,11 @@ namespace FairyStar
         public AnimateCircle(double a, double b, double r, int w, int h) : base(a,b,r)       //전체 정의하는 선언.
         {
             width = w; height = h;
+        }
+
+        public virtual void paintDo(Graphics g, Brush b)
+        {
+            Res.FillEllipse(g, b, this);
         }
     }
 

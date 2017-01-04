@@ -12,18 +12,35 @@ namespace FairyStar
 {
     public partial class GUI : Form
     {
+
+        public PlayArea Play;
+        public KeyTask KeyIN;
         public GUI()
         {
             InitializeComponent();
-            //ㅁㄴㅇㄴㅁㅇㅁㅇㄴ
         }
 
-        private void Form1_Load(object sender, EventArgs e)
+        private void GUI_Load(object sender, EventArgs e)
         {
-            SetStyle(ControlStyles.AllPaintingInWmPaint, true);
-            SetStyle(ControlStyles.UserPaint, true);
-            SetStyle(ControlStyles.DoubleBuffer, true);
+            SetStyle(ControlStyles.AllPaintingInWmPaint | ControlStyles.UserPaint | ControlStyles.DoubleBuffer, true); //더블버퍼링
+            UpdateStyles();
             SetBounds(0, 0, Config.wWidth, Config.wHeight);
+            Config.pWidth = PlayArea_Panel.Width;
+            Config.pHeight = PlayArea_Panel.Height;
+            Res.window = this;
+        }
+
+        private void PlayArea_Panel_VisibleChanged(object sender, EventArgs e)
+        {
+            if (this.Visible)
+            {
+                Play = new PlayArea(this);
+                KeyIN = new PlayListener(Play);
+            }
+            else
+            {
+                Play = null;
+            }
         }
     }
 }
