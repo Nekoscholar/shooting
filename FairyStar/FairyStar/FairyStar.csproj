@@ -49,9 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AnimateForm.cs" />
+    <Compile Include="틀\AnimateForm.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="DoubleBufferPanel.cs">
+    <Compile Include="틀\DoubleBufferPanel.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GUI.cs">
@@ -60,9 +60,9 @@
     <Compile Include="GUI.Designer.cs">
       <DependentUpon>GUI.cs</DependentUpon>
     </Compile>
-    <Compile Include="PlayArea.cs" />
-    <Compile Include="Player.cs" />
-    <Compile Include="PlayListener.cs" />
+    <Compile Include="Play\PlayArea.cs" />
+    <Compile Include="Play\Player.cs" />
+    <Compile Include="Play\PlayListener.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="GUI.resx">

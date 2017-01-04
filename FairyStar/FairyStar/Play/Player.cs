@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace FairyStar
 {
-    public class Player : FairyStar.AnimateCircle
+    public class Player : AnimateCircle
     {
 
     }

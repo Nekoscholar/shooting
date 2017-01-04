@@ -1,3 +1,6 @@
 ﻿using System.Net.Sockets;
 Udpclient : 객체명
 
+타이머는
+System.Threading.Timer 사용.
+정확도 높고 다중 타이머 제한이 없음
