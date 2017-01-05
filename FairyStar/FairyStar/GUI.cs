@@ -28,13 +28,16 @@ namespace FairyStar
             Config.pWidth = PlayArea_Panel.Width;
             Config.pHeight = PlayArea_Panel.Height;
             Res.window = this;
+
+
+            Play = new PlayArea(this);
+            Play.Init();
         }
 
         private void PlayArea_Panel_VisibleChanged(object sender, EventArgs e)
         {
             if (this.Visible)
             {
-                Play = new PlayArea(this);
                 KeyIN = new PlayListener(Play);
             }
             else

@@ -49,6 +49,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Play\Listener\KeyProcess.cs" />
+    <Compile Include="Play\LoopThread\FrameThread.cs" />
+    <Compile Include="Play\LoopThread\TouchThread.cs" />
     <Compile Include="틀\AnimateForm.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="틀\DoubleBufferPanel.cs">
@@ -62,9 +65,9 @@
     </Compile>
     <Compile Include="Play\PlayArea.cs" />
     <Compile Include="Play\Player.cs" />
-    <Compile Include="Play\PlayListener.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Play\Listener\PlayListener.cs" />
     <EmbeddedResource Include="GUI.resx">
       <DependentUpon>GUI.cs</DependentUpon>
     </EmbeddedResource>

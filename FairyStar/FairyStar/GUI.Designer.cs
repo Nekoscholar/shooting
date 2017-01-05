@@ -54,6 +54,7 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.GUI_Load);
             this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.GUI_KeyDown);
+            this.KeyUp += new System.Windows.Forms.KeyEventHandler(this.GUI_KeyUp);
             this.ResumeLayout(false);
 
         }
