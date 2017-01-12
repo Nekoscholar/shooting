@@ -118,6 +118,7 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="image\bullet.png" />
     <Content Include="구현 순서.txt" />
     <Content Include="구현해야할것.txt" />
     <Content Include="몹 데이터.txt" />

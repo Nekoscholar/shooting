@@ -24,7 +24,7 @@ namespace FairyStar
         public FrameThread(PlayArea obj)
         {
             Play = obj;
-            Paint_Call = new Timer(repaint, null, 0, 30);
+            Paint_Call = new Timer(repaint, null, 0, 15);
 
             for(int i=0;i<Buffer_Count;i++)
                 Buffer[i] = new Bitmap(Config.pWidth, Config.pHeight);

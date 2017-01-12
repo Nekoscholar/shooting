@@ -14,7 +14,8 @@ namespace FairyStar
         public int Type = 1;
         public int Action = 1;
         public int Team = 2;        //2는 적, 1은 아군
-        public Timer TASK;
+        public bool REMOVE = false;
+        public Timer TASK, TASK2;
 
         public Bullet(float a, float b, float r, int w, int h) : base(a, b, r, w, h)
         {
@@ -23,12 +24,13 @@ namespace FairyStar
 
         public void Init()
         {
-            TASK = new Timer(DO, null, 0, 15);
+            //TASK = new Timer(MOVE, null, 0, 15);
+            TASK2 = new Timer(check_outArea, null, 0, 1000);
         }
 
-        public void DO(object obj)
+        public void MOVE(object obj)
         {
-            lock (this)
+            if (!REMOVE)
             {
                 x += speedX;
                 y += speedY;
@@ -42,22 +44,23 @@ namespace FairyStar
             Res.DrawDefaultBullet(g, p, b, x, y, width, height, radius, Team);
         }
         
-        public bool outArea()
+        public void check_outArea(object obj)
         {
-            if (Action == 0 && (x > Res.window.Play.areaWidth && speedX >= 0 && accelX >= 0) ||
+            if (Action == 0 && (x - width > Res.window.Play.areaWidth && speedX >= 0 && accelX >= 0) ||
                             (x + width < 0 && speedX <= 0 && accelX <= 0) ||
-                            (y > Res.window.Play.areaHeight && speedY >= 0 && accelY >= 0) ||
+                            (y - height > Res.window.Play.areaHeight && speedY >= 0 && accelY >= 0) ||
                             (y + height < 0 && speedY <= 0 && accelY <= 0))
             {
-                return true;
+                REMOVE = true;
             }
-            return false;
+            else
+                REMOVE = false;
         }
 
         public void Dispose()
         {
             TASK.Change(System.Threading.Timeout.Infinite, System.Threading.Timeout.Infinite);
-            TASK.Dispose();
+            TASK.Dispose(); TASK = null;
         }
     }
 }

@@ -46,43 +46,72 @@ namespace FairyStar
                 //    Touch_Player_EnemyLaser[i].Start();
             }
         }
+
         public void DO(object obj)
         {
+            List<int> ErrorIndex = new List<int>();
             for (int i = (int)obj; i < Play.Object_Bullet.Count; i+=ThreadNum)
             {
                 try
                 {
-                    lock (Play.Object_Bullet.ElementAt(i))
-                    {
-                        Bullet B = Play.Object_Bullet.ElementAt(i);
-                        switch (B.Team)
-                        {
-                            case 1:
-                                break;
-                            case 2:
-                                for (int j = 0; j < Play.TempPlayer.Count; j++)
-                                {
-                                    if (Play.TempPlayer.ElementAt(j).touch(B))
-                                    {
-                                        Play.TempPlayer.ElementAt(j).impact(5);
-                                        Play.Object_Bullet.RemoveAt(i);
-                                        i--;
-                                        B.Dispose();
-                                    }
-                                }
-                                break;
-                        }
-                        if (B.outArea())
-                        {
-                            Play.Object_Bullet.RemoveAt(i);
-                            i--;
-                            B.Dispose();
-                        }
-                    }
+                    BulletDO(i);
+                }
+                catch (Exception e)
+                {
+                    ErrorIndex.Add(i);
+                    continue;
+                }
+            }
+
+            List<int> ErrorIndex2 = new List<int>();
+            foreach (int i in ErrorIndex)
+            {
+                try
+                {
+                    BulletDO(i);
+                }
+                catch (Exception e)
+                {
+                    ErrorIndex2.Add(i);
+                    continue;
+                }
+            }
+
+            foreach (int i in ErrorIndex2)
+            {
+                try
+                {
+                    BulletDO(i);
                 }
                 catch (Exception e)
                 {
                     continue;
+                }
+            }
+        }
+
+        public void BulletDO(int i)
+        {
+            lock (Play.Object_Bullet.ElementAt(i))
+            {
+                if (Play.Object_Bullet.ElementAt(i).REMOVE)
+                    return;
+                Bullet B = Play.Object_Bullet.ElementAt(i);
+                B.MOVE(null);
+                switch (B.Team)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        for (int j = 0; j < Play.TempPlayer.Count; j++)
+                        {
+                            if (Play.TempPlayer.ElementAt(j).touch(B))
+                            {
+                                Play.TempPlayer.ElementAt(j).impact(5);
+                                B.REMOVE = true;
+                            }
+                        }
+                        break;
                 }
             }
         }
@@ -135,11 +164,11 @@ namespace FairyStar
                                     }
                                     break;
                             }
-                            if (B.outArea())
-                            {
-                                Play.Object_Bullet.RemoveAt(i);
-                                B.Dispose();
-                            }
+                            //if (B.outArea())
+                            //{
+                            //    Play.Object_Bullet.RemoveAt(i);
+                            //    B.Dispose();
+                            //}
                         }
                     }
                     catch(Exception e)

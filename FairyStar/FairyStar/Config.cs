@@ -5,6 +5,7 @@ using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 
 namespace FairyStar
 {
@@ -28,6 +29,8 @@ namespace FairyStar
         public static RectangleF DefaultClip;
 
         public static SmoothingMode SmoothingStrategy = SmoothingMode.Default;
+        
+        //public static Bitmap BitBullet = new Bitmap(@"H:\bullet.png");
     }
 
     public class Res        //해상도에 상관없이 플레이영역에 절대적인 개체 표시를 위한 메소드 모음
@@ -88,11 +91,12 @@ namespace FairyStar
         }
         public static void DrawDefaultBullet(Graphics g, Pen p, Brush b, float x, float y, float width, float height, float radius, float team)
         {
-            g.DrawEllipse(p, window.Play.Z.X + (x  - width / 2f) * Config.resolution_rate, window.Play.Z.Y + (y - height / 2f) * Config.resolution_rate, width*Config.resolution_rate, height* Config.resolution_rate);
+            // g.DrawImage(Config.BitBullet, window.Play.Z.X + (x - width / 2f) * Config.resolution_rate, window.Play.Z.Y + (y - height / 2f) * Config.resolution_rate, width * Config.resolution_rate, height * Config.resolution_rate);
+            g.DrawEllipse(p, window.Play.Z.X + (x - width / 2f) * Config.resolution_rate, window.Play.Z.Y + (y - height / 2f) * Config.resolution_rate, width * Config.resolution_rate, height * Config.resolution_rate);
             if (team == 2)
             {
                 b = new SolidBrush(Config.color_enemy_bullet_core);
-                FillEllipse(g, b, x,y,radius);
+                FillEllipse(g, b, x, y, radius);
             }
         }
     }

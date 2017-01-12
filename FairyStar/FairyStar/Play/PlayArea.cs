@@ -43,9 +43,9 @@ namespace FairyStar
             GRAPHIC_ENGINE.Init();
             IMPACT_ENGINE = new TouchThread(this);
             IMPACT_ENGINE.Init();
-            MOVE_ENGINE = new BulletThread(this);
-            MOVE_ENGINE.Init();
-            TempPlayer.Add(new Player(400, 400, 20, 200, 200));      //임시 개체
+            //MOVE_ENGINE = new BulletThread(this);
+            //MOVE_ENGINE.Init();
+            TempPlayer.Add(new Player(400, 400, 40, 200, 200));      //임시 개체
 
             EnemyUnit L;
             Object_Enemy.Add(L = new EnemyUnit(1000, 1000, 30, 300, 300));
@@ -63,8 +63,10 @@ namespace FairyStar
                         Bullet L;
                         Object_Bullet.Add(L = new Bullet(E.x, E.y, 20, 100, 100));
                         double Radian = (E.direct+(360/3)*i) * Math.PI / 180;
-                        L.speedX = 10 * (float)Math.Cos(Radian);
-                        L.speedY = 10 * (float)Math.Sin(Radian);
+                        L.speedX = 20 * (float)Math.Cos(Radian);
+                        L.speedY = 20 * (float)Math.Sin(Radian);
+                        L.accelX = -0.2f * (float)Math.Cos(Radian);
+                        L.accelY = -0.2f * (float)Math.Sin(Radian);
                         L.Init();
                         L.Action = 0;
                     }
@@ -115,6 +117,14 @@ namespace FairyStar
             {
                 try
                 {
+                    if (Object_Bullet.ElementAt(i).REMOVE)
+                    {
+                        Bullet B = Object_Bullet.ElementAt(i);
+                        Object_Bullet.RemoveAt(i);
+                        i--;
+                        B.Dispose();
+                        continue;
+                    }
                     Object_Bullet.ElementAt(i).paintDo(g, p, b);
                 }
                 catch (Exception e)
@@ -134,7 +144,6 @@ namespace FairyStar
         private void PlayArea_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            g.SmoothingMode = Config.SmoothingStrategy;
 
             if (Play.Load)
                 g.DrawImage(Play.GRAPHIC_ENGINE.Buffer[Play.GRAPHIC_ENGINE.Buffer_Select], 0, 0);
