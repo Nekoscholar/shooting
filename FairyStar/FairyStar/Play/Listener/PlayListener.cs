@@ -17,7 +17,7 @@ namespace FairyStar
             Process = new KeyProcess(this);
         }
 
-        public bool KEY_UP = false, KEY_DOWN = false, KEY_LEFT = false, KEY_RIGHT = false;
+        public bool KEY_UP = false, KEY_DOWN = false, KEY_LEFT = false, KEY_RIGHT = false, KEY_SHIFT = false;
 
         public override void KeyDown(object sender, KeyEventArgs e)
         {
@@ -35,6 +35,9 @@ namespace FairyStar
                     break;
                 case Keys.Down:
                     KEY_DOWN = true; ProcessCase = 1;
+                    break;
+                case Keys.ShiftKey:
+                    KEY_SHIFT = true; ProcessCase = 0;
                     break;
             }
 
@@ -62,6 +65,9 @@ namespace FairyStar
                 case Keys.Down:
                     KEY_DOWN = false;
                     break;
+                case Keys.ShiftKey:
+                    KEY_SHIFT = false;
+                    break;
             }
         }
     }
@@ -82,6 +88,26 @@ namespace FairyStar
         private void GUI_KeyUp(object sender, KeyEventArgs e)
         {
             KeyIN.KeyUp(sender, e);
+        }
+
+        private bool onPress = false;
+        private void PlayArea_Panel_MouseDown(object sender, MouseEventArgs e)
+        {
+            onPress = true;
+        }
+
+        private void PlayArea_Panel_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (onPress && Play.Z.Contains(e.Location))
+            {
+                Play.TempPlayer.ElementAt(0).x = (e.X-Play.Z.X)/Config.resolution_rate;
+                Play.TempPlayer.ElementAt(0).y = (e.Y - Play.Z.Y) / Config.resolution_rate;
+            }
+        }
+
+        private void PlayArea_Panel_MouseUp(object sender, MouseEventArgs e)
+        {
+            onPress = false;
         }
     }
 }

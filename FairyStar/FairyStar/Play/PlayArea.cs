@@ -15,12 +15,15 @@ namespace FairyStar
         public Rectangle Z = new Rectangle();
         public float areaWidth = 2000, areaHeight = 2500;
 
-        public List<AnimateCircle> Object_Circle = new List<AnimateCircle>();
+        public List<Player> TempPlayer = new List<Player>();
+        public List<EnemyUnit> Object_Enemy = new List<EnemyUnit>();
+        public List<Bullet> Object_Bullet = new List<Bullet>();
         public List<Laser> Object_Laser = new List<Laser>();
 
-        public Random rand = new Random(DateTime.Now.Millisecond);
+        public Random rand = new Random((int)DateTime.Now.ToBinary());
         public TouchThread IMPACT_ENGINE;
         public FrameThread GRAPHIC_ENGINE;
+        public BulletThread MOVE_ENGINE;
 
         public int score = 0;       //디버그
         public PlayArea(GUI obj) : base()
@@ -40,27 +43,46 @@ namespace FairyStar
             GRAPHIC_ENGINE.Init();
             IMPACT_ENGINE = new TouchThread(this);
             IMPACT_ENGINE.Init();
+            MOVE_ENGINE = new BulletThread(this);
+            MOVE_ENGINE.Init();
+            TempPlayer.Add(new Player(400, 400, 20, 200, 200));      //임시 개체
 
-            Object_Circle.Add(new AnimateCircle(400, 400, 20, 200, 200));      //임시 개체
-            for(int i= 0; i< 1000;i++)
-                Object_Circle.Add(new AnimateCircle(rand.Next(0, (int)areaWidth), rand.Next(0, (int)areaHeight), 30, 200, 200));
-            for(int i = 0; i < 2; i++)
-                Object_Laser.Add(new Laser(1000, 1000, 2000, 20, 180));
-
+            EnemyUnit L;
+            Object_Enemy.Add(L = new EnemyUnit(1000, 1000, 30, 300, 300));
+            Object_Enemy.ElementAt(0).direct = 90;
+            L.Init();
             Load = true;
         }
-        
+
+        public void Shot(EnemyUnit E,int order)
+        {
+            switch (order)
+            {
+                case 1:
+                    for (int i = 0; i < 3; i++) {
+                        Bullet L;
+                        Object_Bullet.Add(L = new Bullet(E.x, E.y, 20, 100, 100));
+                        double Radian = (E.direct+(360/3)*i) * Math.PI / 180;
+                        L.speedX = 10 * (float)Math.Cos(Radian);
+                        L.speedY = 10 * (float)Math.Sin(Radian);
+                        L.Init();
+                        L.Action = 0;
+                    }
+                    break;
+            }
+        }
+
         public void paintDo(Graphics g, Pen p, Brush b)
         {
             g.FillRectangle(b, Z.X,Z.Y,Z.Width-1,Z.Height-1);
 
             g.SetClip(Z);
             b = new SolidBrush(Config.color_PlayArea_Foreground);
-            for (int i = 0; i < Object_Circle.Count; i++)
+            for (int i = 0; i < TempPlayer.Count; i++)
             {
                 try
                 {
-                    Object_Circle.ElementAt(i).paintDo(g, b);
+                    TempPlayer.ElementAt(i).paintDo(g, b);
                 }
                 catch(InvalidOperationException e)
                 {
@@ -78,9 +100,33 @@ namespace FairyStar
                     continue;
                 }
             }
+            for (int i = 0; i < Object_Enemy.Count; i++)
+            {
+                try
+                {
+                    Object_Enemy.ElementAt(i).paintDo(g, p, b);
+                }
+                catch (InvalidOperationException e)
+                {
+                    continue;
+                }
+            }
+            for (int i = 0; i < Object_Bullet.Count; i++)
+            {
+                try
+                {
+                    Object_Bullet.ElementAt(i).paintDo(g, p, b);
+                }
+                catch (Exception e)
+                {
+                    continue;
+                }
+            }
             g.SetClip(Config.DefaultClip);
         }
     }
+
+
     public partial class GUI : Form
     {
         public Pen p = new Pen(Config.color_PlayArea_Foreground);
@@ -88,16 +134,13 @@ namespace FairyStar
         private void PlayArea_Paint(object sender, PaintEventArgs e)
         {
             Graphics g = e.Graphics;
-            Config.DefaultMatrix = g.Transform;
-            g.SmoothingMode = SmoothingMode.HighQuality;
+            g.SmoothingMode = Config.SmoothingStrategy;
 
             if (Play.Load)
-            {
                 g.DrawImage(Play.GRAPHIC_ENGINE.Buffer[Play.GRAPHIC_ENGINE.Buffer_Select], 0, 0);
-                Play.GRAPHIC_ENGINE.EndPaint();
-            }
 
-            g.DrawString(Play.score.ToString(), this.Font, b,50, 50);
+            g.DrawString(Play.TempPlayer.ElementAt(0).HP.ToString(), this.Font, b,50, 50);
+            g.DrawString(Play.Object_Bullet.Count.ToString(), this.Font, b, 50, 80);
         }
     }
 }

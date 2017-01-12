@@ -43,6 +43,9 @@
             this.PlayArea_Panel.TabIndex = 0;
             this.PlayArea_Panel.VisibleChanged += new System.EventHandler(this.PlayArea_Panel_VisibleChanged);
             this.PlayArea_Panel.Paint += new System.Windows.Forms.PaintEventHandler(this.PlayArea_Paint);
+            this.PlayArea_Panel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.PlayArea_Panel_MouseDown);
+            this.PlayArea_Panel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.PlayArea_Panel_MouseMove);
+            this.PlayArea_Panel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.PlayArea_Panel_MouseUp);
             // 
             // GUI
             // 

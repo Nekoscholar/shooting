@@ -11,18 +11,20 @@ namespace FairyStar
     public class AnimateCircle : Circle     //디버그에만 그대로 쓰고, 실제 구현시엔 유닛이나 탄에 상속시켜야함
     {
         public int width, height;       //그래픽 그리기를 위한 크기
-        public double speedX, speedY, accelX, accelY;
+        public float speedX = 0, speedY = 0, accelX = 0, accelY = 0, preX = 0, preY = 0;
+        public float direct = 0;
         public AnimateCircle() : base()
         {
         }
         public AnimateCircle(float a, float b, float r, int w, int h) : base(a,b,r)       //전체 정의하는 선언.
         {
             width = w; height = h;
+            preX = a; preY = b;
         }
 
         public virtual void paintDo(Graphics g, Brush b)
         {
-            Res.FillEllipse(g, b, this);
+            Res.FillEllipse(g, b, x,y,radius);
         }
     }
 
@@ -65,6 +67,12 @@ namespace FairyStar
         public bool touch(Circle C)     //원과 원 사이의 피탄 측정        (주로 사용)
         {
             return (distance(C) <= radius + C.radius) ? true : false;
+        }
+
+        public bool touch(Circle C, float x, float y)
+        {
+            Circle D = new Circle(x, y, C.radius);
+            return (distance(D) <= radius + C.radius) ? true : false;
         }
     }
 
